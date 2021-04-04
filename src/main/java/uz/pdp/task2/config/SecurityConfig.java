@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .inMemoryAuthentication()
 //                .withUser("super_admin").password(passwordEncoder().encode("123")).roles("SUPER_ADMIN").authorities("READ", "READ_BY_ID", "DELETE,", "ADD_PRODUCT", "EDIT_PRODUCT")
 //                .and()
-//                .withUser("moderator").password(passwordEncoder().encode("1234")).roles("MODERATOR").authorities("ADD_PRODUCT", "EDIT_PRODUCT")
+//                .withUser("moderator").password(passwordEncoder().encode("1234")).roles("MODERATOR").authorities("READ","READ_BY_ID","ADD_PRODUCT", "EDIT_PRODUCT")
 //                .and()
 //                .withUser("operator").password(passwordEncoder().encode("12345")).roles("OPERATOR").authorities("READ");
 //
@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //                .csrf().disable()
 //                .authorizeRequests()
-//                .antMatchers(HttpMethod.GET, "/api/product/**").hasAuthority("READ")
+//                .antMatchers(HttpMethod.GET, "/api/product/**").hasAnyAuthority("READ","READ_BY_ID")
 //                .antMatchers(HttpMethod.POST, "/api/product/**").hasAuthority("ADD_PRODUCT")
 //                .antMatchers(HttpMethod.PUT, "/api/product/**").hasAuthority("EDIT_PRODUCT")
 //                .antMatchers("/api/**").hasAnyAuthority("READ", "READ_BY_ID", "DELETE,", "ADD_PRODUCT", "EDIT_PRODUCT")
@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/product/**").hasAnyRole("OPERATOR", "SUPER_ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/product/**").hasAnyRole("OPERATOR","MODERATOR", "SUPER_ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/product/**").hasAnyRole("MODERATOR", "SUPER_ADMIN")
                 .antMatchers(HttpMethod.PUT, "/api/product/**").hasAnyRole("MODERATOR", "SUPER_ADMIN")
                 .antMatchers("/api/**").hasRole("SUPER_ADMIN")
